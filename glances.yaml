@@ -1,0 +1,20 @@
+---
+- name: Install Glances
+  hosts: 192.168.29.30 # Replace with your target host or group
+  become: yes
+
+  tasks:
+    - name: Update apt cache (for Debian/Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Glances
+      package:
+        name: glances
+        state: present
+
+    - name: Start Glances service
+      service:
+        name: glances
+        state: started
